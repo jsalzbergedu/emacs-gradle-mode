@@ -128,11 +128,23 @@ If there is a folder you care to run from higher than this level, you need to mo
   (interactive)
   (gradle-run "test"))
 
+(defun gradle-test--debug ()
+  "Execute the gradle test command.
+Wait for a debugger to connect."
+  (interactive)
+  (gradle-run "build --debug-jvm"))
+
 (defun gradle-single-test (single-test-name)
   "Execute gradle test on file SINGLE-TEST-NAME supplied by user."
   (interactive "sType single test to run: ")
   (gradle-run
    (s-concat "test -Dtest.single=" single-test-name)))
+
+(defun gradle-single-test--debug (single-test-name)
+  "Execute gradle test on file SINGLE-TEST-NAME supplied by user.
+Wait for a debugger to connect."
+  (interactive)
+  (gradle-run (s-concat "test -Dtest.single=" single-test-name "--debug-jvm")))
 
 (defun gradle-execute--daemon (tasks)
   "Execute gradle command, using daemon, with TASKS supplied by user input."
@@ -150,11 +162,25 @@ If there is a folder you care to run from higher than this level, you need to mo
   (interactive)
   (gradle-run "test --daemon"))
 
+(defun gradle-test--daemon-debug ()
+  (interactive)
+  (gradle-run "test --daemon --debug-jvm"))
+
 (defun gradle-single-test--daemon (single-test-name)
   "Execute gradle test, using daemon, on file SINGLE-TEST-NAME supplied by user."
   (interactive "sType single test to run: ")
   (gradle-run
    (s-concat "test -Dtest.single=" single-test-name " --daemon")))
+
+(defun gradle-single-test--daemon-debug (single-test-name)
+  "Execute gradle test on file SINGLE-TEST-NAME supplied by user.
+Wait for a debugger to connect."
+  (interactive)
+  (gradle-run (s-concat "test -Dtest.single="
+                        single-test-name
+                        "--daemon"
+                        " --debug-jvm")))
+
 
 ;;; ----------
 ;; gradle-mode keybindings
